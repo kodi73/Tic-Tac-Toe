@@ -1,6 +1,8 @@
 const Gameboard = (function () {
     const board = ["", "", "", "", "", "", "", "", ""];
+
     const getBoard = () => board;
+
     const setMark = (index, mark) => {
         if (board[index] !== "") return false;
         board[index] = mark;
@@ -20,6 +22,7 @@ const Gameboard = (function () {
 
 const Player = (name, mark) => {
     const getName = () => name;
+    
     const getMark = () => mark;
 
     return {
