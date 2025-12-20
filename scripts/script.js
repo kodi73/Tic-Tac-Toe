@@ -28,3 +28,30 @@ const Player = (name, mark) => {
     };
 };
 
+const GameController = (function () {
+    const player1 = Player("Player 1", "X");
+    const player2 = Player("Player 2", "O");
+
+    let activePlayer = player1;
+
+    const switchPlayer = () => {
+        activePlayer = activePlayer === player1 ? player2 : player1;
+    };
+
+    const getActivePlayer = () => activePlayer;
+
+    const playRound = (index) => {
+        const success = Gameboard.setMark(index, activePlayer.getMark());
+        if (!success) {
+            return false; 
+        }
+
+        switchPlayer();
+        return true;
+    };
+
+    return {
+        playRound,
+        getActivePlayer,
+    };
+})();
