@@ -32,6 +32,8 @@ const Player = (name, mark) => {
 };
 
 const GameController = (function () {
+    let gameOver = false;
+
     const player1 = Player("Player 1", "X");
     const player2 = Player("Player 2", "O");
 
@@ -44,6 +46,8 @@ const GameController = (function () {
     const getActivePlayer = () => activePlayer;
 
     const playRound = (index) => {
+        if (gameOver) return;
+
         const success = Gameboard.setMark(index, activePlayer.getMark());
         if (!success) {
             return; 
@@ -51,17 +55,25 @@ const GameController = (function () {
 
         const winner = checkWinner();
         if (winner) {
+            gameOver = true;
             console.log(`${activePlayer.getName()} wins the round!🥳`);
             return;
         }
 
         if (checkTie()) {
+            gameOver = true;
             console.log("Its a tie.👔");
             return;
         }
 
         switchPlayer();
     };
+
+    const reset = () => {
+        Gameboard.reset(),
+        activePlayer = player1;
+        gameOver = false;
+    }
 
     const winningCombinations = [
         [0, 1, 2], 
@@ -97,10 +109,15 @@ const GameController = (function () {
     return {
         playRound,
         getActivePlayer,
+        reset,
+        checkWinner,
+        checkTie,
     };
 })();
 
 const DisplayController = (function () {
+    const statusText = document.getElementById("status");
+    const restartButton = document.getElementById("restart");
     const boardElement = document.getElementById("gameboard");
     const render = () => {
         boardElement.innerHTML = "";
@@ -117,8 +134,25 @@ const DisplayController = (function () {
             });
 
             boardElement.appendChild(square);
-        });
+        });  
+        
+        const winner = GameController.checkWinner();
+
+        if (winner) {
+            statusText.textContent = `${winner} wins. 🏆`;
+        } 
+        else if (GameController.checkTie()) {
+            statusText.textContent = "It's a tie. 👔";
+        }
+        else {
+            statusText.textContent = `${GameController.getActivePlayer().getName()}'s turn.`;
+        }
     };
+
+    restartButton.addEventListener("click", () => {
+        GameController.reset();
+        render();
+    });
 
     return {
         render,
