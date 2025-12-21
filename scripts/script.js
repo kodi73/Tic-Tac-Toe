@@ -106,10 +106,16 @@ const DisplayController = (function () {
         boardElement.innerHTML = "";
         const board = Gameboard.getBoard();
 
-        board.forEach((mark) => {
+        board.forEach((mark, index) => {
             const square = document.createElement("div");
             square.classList.add("square");
             square.textContent = mark;
+
+            square.addEventListener("click", () => {
+                GameController.playRound(index);
+                render();
+            });
+
             boardElement.appendChild(square);
         });
     };
@@ -118,3 +124,5 @@ const DisplayController = (function () {
         render,
     };
 })();
+
+DisplayController.render();
