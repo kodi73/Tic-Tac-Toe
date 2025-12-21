@@ -51,7 +51,7 @@ const GameController = (function () {
 
         const winner = checkWinner();
         if (winner) {
-            console.log(`${activePlayer.getName} wins the round!🥳`);
+            console.log(`${activePlayer.getName()} wins the round!🥳`);
             return;
         }
 
@@ -97,5 +97,24 @@ const GameController = (function () {
     return {
         playRound,
         getActivePlayer,
+    };
+})();
+
+const DisplayController = (function () {
+    const boardElement = document.getElementById("gameboard");
+    const render = () => {
+        boardElement.innerHTML = "";
+        const board = Gameboard.getBoard();
+
+        board.forEach((mark) => {
+            const square = document.createElement("div");
+            square.classList.add("square");
+            square.textContent = mark;
+            boardElement.appendChild(square);
+        });
+    };
+
+    return {
+        render,
     };
 })();
