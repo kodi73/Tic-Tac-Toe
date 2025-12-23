@@ -1,6 +1,6 @@
 # Tic Tac Toe — Unbeatable AI (Minimax)
 
-A browser-based **Tic Tac Toe** game built using **HTML, CSS, and JavaScript**, featuring an **unbeatable single-player AI** powered by the **Minimax algorithm** and styled with a **dark arcade / neon aesthetic**.
+A browser-based **Tic Tac Toe** game built using **HTML, CSS, and JavaScript**, featuring an **unbeatable single-player AI** powered by the **Minimax algorithm** and having a **dark arcade** style.
 
 This project follows the principles taught in **The Odin Project**, with an emphasis on:
 - minimal global state
@@ -13,7 +13,7 @@ This project follows the principles taught in **The Odin Project**, with an emph
 ## 🎯 Features
 
 - Single-player Tic Tac Toe (Human vs Computer)
-- **Unbeatable AI** using depth-aware Minimax
+- **Unbeatable AI** using Minimax
 - Dark arcade UI with neon visuals
   - **X** → Neon Yellow
   - **O** → Neon Orange
@@ -50,7 +50,6 @@ At best, the human player can force a draw.
 │ └── style.css
 └── scripts/
 └── script.js
-
 
 ---
 
@@ -138,12 +137,10 @@ No frameworks. No dependencies.
 
 ## 🚀 Possible Extensions
 
-- Difficulty levels (limit Minimax depth)
+- Difficulty levels
 - Alpha–beta pruning for performance
 - Multiplayer mode
 - Sound effects
-- Retro pixel fonts or CRT scanlines
-- Mobile responsiveness
 
 ---
 
