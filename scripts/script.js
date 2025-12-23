@@ -34,7 +34,7 @@ const Player = (name, mark) => {
 const GameController = (function () {
     let gameOver = false;
 
-    const player1 = Player("Player 1", "X");
+    const player1 = Player("Player", "X");
     const player2 = Player("Computer", "O");
     const isSinglePlayer = true;
 
