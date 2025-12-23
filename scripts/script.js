@@ -68,6 +68,21 @@ const GameController = (function () {
         }
 
         switchPlayer();
+
+        if (isSinglePlayer && activePlayer.getMark() === "O") {
+            const boardCopy = [...Gameboard.getBoard()];
+            
+            const aiMove = getBestMove(boardCopy);
+            Gameboard.setMark(aiMove, "O");
+
+            result = checkWinner();
+            if (result || checkTie()) {
+              gameOver = true;
+              return;
+        }
+
+        switchPlayer();
+    }
     };
 
     const reset = () => {
@@ -145,6 +160,77 @@ const evaluateBoard = (board) => {
 
   return null;
 };
+
+// getAvailableMoves
+const getAvailableMoves = (board) => {
+  const moves = [];
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === "") {
+      moves.push(i);
+    }
+  }
+
+  return moves;
+};
+
+//Minimax
+const minimax = (board, isMaximizing) => {
+  const result = evaluateBoard(board);
+  if (result !== null) {
+    if (result === "O") return 10;
+    if (result === "X") return -10;
+    if (result === "tie") return 0;
+  }
+
+  const moves = getAvailableMoves(board);
+
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+
+    for (let move of moves) {
+      board[move] = "O";
+      const score = minimax(board, false);
+      board[move] = "";
+      bestScore = Math.max(score, bestScore);
+    }
+
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+
+    for (let move of moves) {
+      board[move] = "X";
+      const score = minimax(board, true);
+      board[move] = "";
+      bestScore = Math.min(score, bestScore);
+    }
+
+    return bestScore;
+  }
+};
+
+// getting the best move for AI
+
+const getBestMove = (board) => {
+  let bestScore = -Infinity;
+  let move = null;
+
+  for (let index of getAvailableMoves(board)) {
+    board[index] = "O";
+    const score = minimax(board, false);
+    board[index] = "";
+
+    if (score > bestScore) {
+      bestScore = score;
+      move = index;
+    }
+  }
+
+  return move;
+};
+
+
 
 
 const DisplayController = (function () {
