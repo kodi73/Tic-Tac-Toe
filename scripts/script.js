@@ -246,6 +246,9 @@ const DisplayController = (function () {
             square.classList.add("square");
             square.textContent = mark;
 
+            if (mark === "X") square.classList.add("x");
+            if (mark === "O") square.classList.add("o");
+
             square.addEventListener("click", () => {
                 GameController.playRound(index);
                 render();
